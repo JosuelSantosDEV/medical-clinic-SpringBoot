@@ -1,6 +1,7 @@
 package med.voll.api.doctor;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    private boolean active;
+
     public Doctor(DoctorRegistrationData data ){
         this.name = data.name();
         this.email = data.email();
@@ -35,6 +38,23 @@ public class Doctor {
         this.phone = data.phone();
         this.specialty = data.specialty();
         this.address = new Address(data.address());
+        this.active = true;
+    }
 
+    public void updateAttributes(@Valid DoctorUpdateData data) {
+        if(data.name() != null){
+            this.name = data.name();
+        }
+        if(data.phone() != null){
+            this.phone = data.phone();
+        }
+        if(data.address() != null){
+            this.address.updateAttributes(data.address());
+        }
+
+    }
+
+    public void desable() {
+        this.active = false;
     }
 }
