@@ -15,4 +15,4 @@ CREATE TABLE doctors (
     complement VARCHAR(100),
 
     PRIMARY KEY(id)
-)
+);
